@@ -29,7 +29,7 @@ int get_angle(){
 void calc_turn(int turn_idx, float* b, float* v, float* b1, float s1, float s2, float* x, float* y, int q, float* d) {
     int k1 = -20;
     //printf("%d %e %f %f %f %e %f %f %f\n", turn_idx ,b[turn_idx], v[turn_idx], b1[turn_idx], s1, s2, x[turn_idx], y[turn_idx], d[turn_idx]);
-    if (turn_idx == 0) {
+    if (turn_idx == 1) {
         k1 = 0;
     }
     float a1 = A * cos(b[turn_idx]) + k1 * cos(PI/2 + b[turn_idx]);
@@ -54,7 +54,7 @@ void calc_turn(int turn_idx, float* b, float* v, float* b1, float s1, float s2, 
         }
     }
     
-    for (int k = 2; k<q; k++) { // 1370
+    for (int k = 2; k<=q; k++) { // 1370
         if (!(k == turn_idx || x[k] == 0)){
             if (abs(s5 - x[k]) < 10 && abs(s6 - y[k]) < 10) {
                 b[k] = atan((y[k] - s2) / (x[k] - s1));
@@ -83,7 +83,7 @@ void calc_turn(int turn_idx, float* b, float* v, float* b1, float s1, float s2, 
         s2 = 0;
         s5 = 0;
         s6 = 0;
-        for (int l = 1; l < q; l++) {
+        for (int l = 1; l <= q; l++) {
             if (v[l] > abs(A * 5 / 100)) {
                 calc_turn(l, b, v, b1, s1, s2, x, y, q, d);
             }
