@@ -28,7 +28,6 @@ int get_angle(){
 
 void calc_turn(int turn_idx, float* b, float* v, float* b1, float s1, float s2, float* x, float* y, int q, float* d) {
     int k1 = -20;
-    //printf("%d %e %f %f %f %e %f %f %f\n", turn_idx ,b[turn_idx], v[turn_idx], b1[turn_idx], s1, s2, x[turn_idx], y[turn_idx], d[turn_idx]);
     if (turn_idx == 1) {
         k1 = 0;
     }
@@ -47,7 +46,6 @@ void calc_turn(int turn_idx, float* b, float* v, float* b1, float s1, float s2, 
     if (turn_idx != 1) {
         if (abs(s5-x[0]) < 7 && abs(s6-y[0]) < 7) {
             int k = 1;
-            printf("\n\ncod ne rabotaet\n\n");
             if (turn_idx == 1) {
                 v[turn_idx] = 5 * v[turn_idx];
             }
