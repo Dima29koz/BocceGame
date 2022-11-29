@@ -1,2 +1,4 @@
 .idea/*
 /emsdk/
+build/*
+!build/.gitkeep
