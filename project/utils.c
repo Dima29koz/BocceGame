@@ -54,19 +54,22 @@ void show_shot_res(float* x, float* y, int last_shot_idx, float* d) {
     else if (d[last_shot_idx] > 500) {
         tab(5);
         printf("YECH! OVER %d FEET AWAY!\n", (int)(d[last_shot_idx] / 30.48));
-        if (x[last_shot_idx] > x[0]) {
-            printf("LONG AND ");
-        }
-        if (x[last_shot_idx] < x[0]) {
-            printf("SHORT AND ");
-        }
-        if (y[last_shot_idx] > y[0]) {
-            printf("TO THE LEFT\n");
-        }
-        if (y[last_shot_idx] < y[0]) {
-            printf("TO THE RIGHT\n");
-        }
     }
+
+    if (x[last_shot_idx] > x[0]) {
+        printf("LONG AND ");
+    }
+    else if (x[last_shot_idx] < x[0]) {
+        printf("SHORT AND ");
+    }
+
+    if (y[last_shot_idx] > y[0]) {
+        printf("TO THE LEFT\n");
+    }
+    else if (y[last_shot_idx] < y[0]) {
+        printf("TO THE RIGHT\n");
+    }
+    
     printf("\n");
 }
 
