@@ -34,7 +34,7 @@ void print_header(){
 void show_shot_res(float* x, float* y, int last_shot_idx, float* d) {
     printf("JACK AT COORDINATES %d %d\n", (int)(x[0]), (int)(y[0]));
     for (int m=2; m <= last_shot_idx; m++){
-        float distance = sqrt(pow(y[0] - y[m], 2) + pow(x[0] - x[m], 2)) - 7;
+        float distance = sqrtf((y[0] - y[m]) * (y[0] - y[m]) + (x[0] - x[m]) * (x[0] - x[m])) - 7;
         d[m] = (distance >= 0) ? distance : 0;
         printf("BALL %d AT COORDINATES %f %f IT IS %f FROM THE JACK\n", m-1, x[m], y[m], d[m]);
     }
