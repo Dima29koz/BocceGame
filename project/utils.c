@@ -1,99 +1,120 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include "funcs.h"
 
 void show_rules(int balls_amount){
-    printf("\nIN THIS GAME YOU ROLL %d BALLS SUCCESSIVELY AT A TARGET\n", balls_amount-1);
-    printf("BALL (CALLED A JACK). THE OBJECT IS TO GET THE BALLS AS CLOSE\n");
-    printf("TO THE JACK AS POSSIBLE.  THE BALLS ARE 10 CM IN DIAMETER AND\n");
-    printf("ARE WEIGHTED SO THAT THEY ROLL IN A CURVE. YOU WILL HAVE TO\n");
-    printf("ROLL THEM AT AN ANGLE TO THE LINE FROM YOU AT COORDINATES 0,0\n");
-    printf("TO THE JACK AT COORDINATES X,Y. A POSITIVE ANGLE WILL MAKE\n");
-    printf("THE BALL CURVE CLOCKWISE. A NEGATIVE ANGLE WILL MAKE IT CURVE\n");
-    printf("ANTI-CLOCKWISE.  THE JACK IS A 4 CM WIDE AND WILL ROLL\n");
-    printf("STRAIGHT IF YOU HIT IT.  BALLS HIT BY YOUR THROWN BALL MAY\n");
-    printf("CURVE IN EITHER DIRECTION.\n");
-    printf("\nHINT. TRY AN INITIAL VELOCITY OF 500 AND AN ANGLE OF 10\n\n\n");
+    PRINT("\nIN THIS GAME YOU ROLL %d BALLS SUCCESSIVELY AT A TARGET\n", balls_amount-1);
+    PRINT("BALL (CALLED A JACK). THE OBJECT IS TO GET THE BALLS AS CLOSE\n");
+    PRINT("TO THE JACK AS POSSIBLE.  THE BALLS ARE 10 CM IN DIAMETER AND\n");
+    PRINT("ARE WEIGHTED SO THAT THEY ROLL IN A CURVE. YOU WILL HAVE TO\n");
+    PRINT("ROLL THEM AT AN ANGLE TO THE LINE FROM YOU AT COORDINATES 0,0\n");
+    PRINT("TO THE JACK AT COORDINATES X,Y. A POSITIVE ANGLE WILL MAKE\n");
+    PRINT("THE BALL CURVE CLOCKWISE. A NEGATIVE ANGLE WILL MAKE IT CURVE\n");
+    PRINT("ANTI-CLOCKWISE.  THE JACK IS A 4 CM WIDE AND WILL ROLL\n");
+    PRINT("STRAIGHT IF YOU HIT IT.  BALLS HIT BY YOUR THROWN BALL MAY\n");
+    PRINT("CURVE IN EITHER DIRECTION.\n");
+    PRINT("\nHINT. TRY AN INITIAL VELOCITY OF 500 AND AN ANGLE OF 10\n\n\n");
 }
 
 void tab(int amount){
     for (int i=0; i< amount; i++){
-        printf(" ");
+        PRINT(" ");
     }
 }
 
 void print_header(){
     tab(25);
-    printf("BOCCE\n");
+    PRINT("BOCCE\n");
     tab(19);
-    printf("CREATIVE COMPUTING\n");
+    PRINT("CREATIVE COMPUTING\n");
     tab(17);
-    printf("MORRISTOWN  NEW JERSEY\n");
-    printf("\n\n\n");
+    PRINT("MORRISTOWN  NEW JERSEY\n");
+    PRINT("\n\n\n");
 }
 
 void show_shot_res(float* x, float* y, int last_shot_idx, float* d) {
-    printf("JACK AT COORDINATES %d %d\n", (int)(x[0]), (int)(y[0]));
+    PRINT("JACK AT COORDINATES %d %d\n", (int)(x[0]), (int)(y[0]));
     for (int m=2; m <= last_shot_idx; m++){
         float distance = sqrtf((y[0] - y[m]) * (y[0] - y[m]) + (x[0] - x[m]) * (x[0] - x[m])) - 7;
         d[m] = (distance >= 0) ? distance : 0;
-        printf("BALL %d AT COORDINATES %f %f IT IS %f FROM THE JACK\n", m-1, x[m], y[m], d[m]);
+        PRINT("BALL %d AT COORDINATES %f %f IT IS %f FROM THE JACK\n", m-1, x[m], y[m], d[m]);
     }
-    printf("\n");
+    PRINT("\n");
     if (d[last_shot_idx] < 10) {
         tab(15);
-        printf("EXCELLENT SHOT! \n");
+        PRINT("EXCELLENT SHOT! \n");
     }
     else if (d[last_shot_idx] < 20) {
         tab(15);
-        printf("GOOD SHOOTING! \n");
+        PRINT("GOOD SHOOTING! \n");
     }
     else if (d[last_shot_idx] < 30) {
         tab(15);
-        printf("NICE TRY! \n");
+        PRINT("NICE TRY! \n");
     }
     else if (d[last_shot_idx] > 500) {
         tab(5);
-        printf("YECH! OVER %d FEET AWAY!\n", (int)(d[last_shot_idx] / 30.48));
+        PRINT("YECH! OVER %d FEET AWAY!\n", (int)(d[last_shot_idx] / 30.48));
     }
 
     if (x[last_shot_idx] > x[0]) {
-        printf("LONG AND ");
+        PRINT("LONG AND ");
     }
     else if (x[last_shot_idx] < x[0]) {
-        printf("SHORT AND ");
+        PRINT("SHORT AND ");
     }
 
     if (y[last_shot_idx] > y[0]) {
-        printf("TO THE LEFT\n");
+        PRINT("TO THE LEFT\n");
     }
     else if (y[last_shot_idx] < y[0]) {
-        printf("TO THE RIGHT\n");
+        PRINT("TO THE RIGHT\n");
     }
     
-    printf("\n");
+    PRINT("\n");
 }
 
 void print_result(int q, float sum_dist) {
-    printf("\nTHE TOTAL DISTANCE OF ALL BALLS FROM THE JACK IS %f CM\n", sum_dist);
+    PRINT("\nTHE TOTAL DISTANCE OF ALL BALLS FROM THE JACK IS %f CM\n", sum_dist);
     if (sum_dist < q * q) {
-        printf("MAGNIFICENT BOWLING! WHAT AN EYE!!\n");
+        PRINT("MAGNIFICENT BOWLING! WHAT AN EYE!!\n");
     }
     else if (sum_dist < 2 * q * q) {
-        printf("EXCELLENT BUT COULD BE BETTER:\n");
+        PRINT("EXCELLENT BUT COULD BE BETTER:\n");
     }
     else if (sum_dist < 3 * q * q) {
-        printf("GOOD BUT NEEDS SOME IMPROVEMENT\n");
+        PRINT("GOOD BUT NEEDS SOME IMPROVEMENT\n");
     }
     else if (sum_dist < 6 * q * q) {
-        printf("FAIR - YOU NEED MORE PRACTICE\n");
+        PRINT("FAIR - YOU NEED MORE PRACTICE\n");
     }
     else if (sum_dist < 10 * q * q) {
-        printf("POOR - TRY TO BE MORE CONSISTANT\n");
+        PRINT("POOR - TRY TO BE MORE CONSISTANT\n");
     }
     else if (sum_dist < 20 * q * q) {
-        printf("YOUR GAME NEEDS LOTS OF WORK\n");
+        PRINT("YOUR GAME NEEDS LOTS OF WORK\n");
     }
     else {
-        printf("DON'T PLAY THIS GAME FOR MONEY!!\n");
+        PRINT("DON'T PLAY THIS GAME FOR MONEY!!\n");
     }
 }
+
+long VAL(char *string) {
+    char *endptr;
+    return strtol(string, &endptr, 10);
+}
+
+void input_string(char **p_target) {
+    *p_target = malloc(512);
+    input(*p_target);
+    strtok(*p_target, "\n");
+}
+
+void input_number(int *p_target) {
+    char *p_number_as_string;
+    input_string(&p_number_as_string);
+    *p_target = VAL(p_number_as_string);
+}
+

@@ -4,27 +4,28 @@
 #include <time.h>
 #include <math.h>
 #include "utils.h"
+#include "funcs.h"
 
 #define A -49.3F
 #define PI 3.14159F
 
 
 int get_velocity(){
-    printf("VELOCITY? ");
+    PRINT("VELOCITY? ");
     int velocity;
-    scanf("\n%d", &velocity);
+    input_number(&velocity);
     velocity = abs(velocity);
     if (velocity > 1000){
-        printf("VELOCITY TOO HIGH\n");
+        PRINT("VELOCITY TOO HIGH\n");
         return get_velocity();
     }
     return velocity;
 }
 
 int get_angle(){
-    printf("ANGLE? ");
+    PRINT("ANGLE? ");
     int angle;
-    scanf("\n%d", &angle);
+    input_number(&angle);
     return angle;
 }
 
@@ -57,7 +58,7 @@ void calc_turn(int turn_idx, float* b, float* v, float* b1, float s1, float s2, 
         if (!(k == turn_idx || x[k] == 0)){
             if (fabsf(s5 - x[k]) < 10 && fabsf(s6 - y[k]) < 10) {
                 b[k] = atanf((y[k] - s2) / (x[k] - s1));
-                printf("%c", 7);
+                PRINT("%c", 7);
                 if (turn_idx == 1) {
                     v[turn_idx] = v[turn_idx] / 5;
                 }
@@ -107,13 +108,13 @@ void run(int q) {
     // y[0] = (int)(200 - 400.0 * ((rand() % 100) / 100.0));
     x[0] = 2495;
     y[0] = -178;
-    printf("THE JACK IS LOCATED AT %d %d\n", (int)(x[0]), (int)(y[0]));
+    PRINT("THE JACK IS LOCATED AT %d %d\n", (int)(x[0]), (int)(y[0]));
     for (int ball_number = 2; ball_number<=q; ball_number++){
-        printf("BALL %d\n", ball_number-1);
+        PRINT("BALL %d\n", ball_number-1);
         v[ball_number] = get_velocity();
         b1[ball_number] = get_angle();
         if (fabsf(b1[ball_number]) > 89) {
-            printf("ANGLE TO BIG\n");
+            PRINT("ANGLE TO BIG\n");
         }
         else {
             b[ball_number] = fabsf(b[ball_number]*PI/180);
@@ -139,10 +140,10 @@ int main() {
     srand(time(NULL));
     print_header();
     int q = 5;
-    printf("THIS GAME SIMULATES THE GAME OF LAWN BOWLS\n");
-    printf("DO YOU NEED INSTRUCTIONS? ENTER YES OR NO? ");
-    char rules_flag[4] = "";
-    scanf("\n%s", rules_flag);
+    PRINT("THIS GAME SIMULATES THE GAME OF LAWN BOWLS\n");
+    PRINT("DO YOU NEED INSTRUCTIONS? ENTER YES OR NO? ");
+    char *rules_flag;
+    input_string(&rules_flag);
     if (strcmp (rules_flag, "YES") == 0){
         show_rules(q);
     }
@@ -150,10 +151,10 @@ int main() {
     char repeat_flag[4] = "";
     do  {
         run(q);
-        printf("\nCARE TO TRY AGAIN? ENTER YES OR NO? ");
-        char tmp[4] = "";
-        scanf("%s", tmp);
-        strcpy(repeat_flag, tmp);
+        PRINT("\nCARE TO TRY AGAIN? ENTER YES OR NO? ");
+        char *tmp_flag;
+        input_string(&tmp_flag);
+        strcpy(repeat_flag, tmp_flag);
     } while (strcmp (repeat_flag, "YES") == 0);
     return 0;
 }
